@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  nginx-proxy:
+    container_name: web-proxy
+    image: alexanderkrause/rpi-nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  wordpress:
+    container_name: web-blog
+    image: wordpress
+    environment:
+      - VIRTUAL_HOST=lauragallone.fr.to
+
+  grav:
+    container_name:  web-grav
+    build: ./webserver
+    environment:
+      - VIRTUAL_HOST=laura-equitation.fr.to
+    volumes:
+      - ./grav-data:/var/www/html
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
