@@ -1,27 +1,49 @@
-version: '2'
+version: '3'
 
 services:
+# Reverse Proxy
   nginx-proxy:
     container_name: web-proxy
-    image: alexanderkrause/rpi-nginx-proxy
+    image: alexanderkrause/rpi-nginx-proxy:${PROXY_VERSION}
     ports:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
+# WebServices
   wordpress:
+    depends_on:
+      - bdd
+    links:
+      - bdd
     container_name: web-blog
-    image: wordpress
+    image: arm64v8/wordpress:${WORDPRESS_VERSION}
     environment:
-      - VIRTUAL_HOST=lauragallone.fr.to
+      - VIRTUAL_HOST=${SERVER_NAME01}
+      - WORDPRESS_DB_HOST=bdd:3306
+      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+      - WORDPRESS_DB_USER=${DB_USER}
+      - WORDPRESS_DB_PASSWORD=${DB_PASSWORD}
 
   grav:
     container_name:  web-grav
-    build: ./webserver
+    build: ./.docker/grav
     environment:
-      - VIRTUAL_HOST=laura-equitation.fr.to
+      - VIRTUAL_HOST=${SERVER_NAME02}
     volumes:
       - ./grav-data:/var/www/html
+
+# Databases
+  bdd:
+    container_name: web-bdd
+    image: arm64v8/mariadb:${MYSQL_VERSION}
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./database:/var/lib/mysql
 
 networks:
   default:
