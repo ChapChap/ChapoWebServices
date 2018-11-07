@@ -1,3 +1,4 @@
 .env
 grav-data/
 database/
+proxy/certs
