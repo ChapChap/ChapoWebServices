@@ -7,19 +7,40 @@ services:
     image: alexanderkrause/rpi-nginx-proxy:${PROXY_VERSION}
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./proxy/certs:/etc/nginx/certs:ro
+      - ./proxy/vhost.d:/etc/nginx/vhost.d
+      - ./proxy/challenges:/usr/share/nginx/html
+
+  https-companion:
+    container_name: web-https
+    depends_on:
+      - nginx-proxy
+    image: alexanderkrause/rpi-letsencrypt-nginx-proxy-companion:${PROXY_VERSION}
+    environment:
+      - NGINX_PROXY_CONTAINER=web-proxy
+    volumes :
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./proxy/certs:/etc/nginx/certs
+      - ./proxy/vhost.d:/etc/nginx/vhost.d
+      - ./proxy/challenges:/usr/share/nginx/html
 
 # WebServices
   wordpress:
+    container_name: web-blog
     depends_on:
       - bdd
+      - nginx-proxy
+      - https-companion
     links:
       - bdd
-    container_name: web-blog
     image: arm64v8/wordpress:${WORDPRESS_VERSION}
     environment:
       - VIRTUAL_HOST=${SERVER_NAME01}
+      - LETSENCRYPT_HOST=${SERVER_NAME01}
+      - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
       - WORDPRESS_DB_HOST=bdd:3306
       - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
       - WORDPRESS_DB_USER=${DB_USER}
@@ -27,9 +48,14 @@ services:
 
   grav:
     container_name:  web-grav
+    depends_on:
+      - nginx-proxy
+      - https-companion
     build: ./.docker/grav
     environment:
       - VIRTUAL_HOST=${SERVER_NAME02}
+      - LETSENCRYPT_HOST=${SERVER_NAME02}
+      - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
     volumes:
       - ./grav-data:/var/www/html
 
