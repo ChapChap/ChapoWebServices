@@ -42,7 +42,7 @@ Required packages are:
 - docker
 - docker-compose
 
-To launch the plateform, as simple as docker is, just run
+To launch the platform, as simple as docker is, just run
 ```
 docker-compose up -d
 ```
@@ -81,8 +81,8 @@ It all started when I bought the first version of RaspberryPi computer. It was t
 - transmission-torrent
 - gitlab
 
-The Pi was used as a Streaming plateform (audio, movies, documents), backup plateform, seedbox and dev plateform. All these services ran well on the tiny chip despite the few performances. But, the maintenance was a bit tough when it came to debug. Thus, sadly, some services stopped working. Then I moved to another location and I shut the Pi off.
+The Pi was used as a Streaming platform (audio, movies, documents), backup platform, seedbox and dev platform. All these services ran well on the tiny chip despite the limited capacity of the chip. But, the maintenance was a bit tough when it came to debug. Thus, sadly, some services stopped working. Then I moved to another location and I shut the Pi off.
 
 Later, I saw a project of a raspi dashcam and I started thinking about doing it myself, which I never did due to a lack of time.
 
-Recently, I heard about docker and containers at school and at work. From that time I am really interested in acquiring knowledge about this tech. As I am still a student and I have no big income, I set my sight on new generation chips. I am challenging myself to cluster their hardware and to deploy containers freely over a scalable plateform made by my own.
+Recently, I heard about docker and containers at school and at work as well. From that moment on I 've been really interested in gainingas much knowledge as possible about that tech. Being a student (and as such a bit short on money), I've set my sights on new generation chips. I am challenging myself to cluster their hardware and to deploy containers freely over a scalable platform made by my own.
