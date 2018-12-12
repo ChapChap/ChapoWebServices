@@ -46,18 +46,31 @@ services:
       - WORDPRESS_DB_USER=${DB_USER}
       - WORDPRESS_DB_PASSWORD=${DB_PASSWORD}
 
-  grav:
-    container_name:  web-grav
+  # grav:
+  #   container_name:  web-grav
+  #   depends_on:
+  #     - nginx-proxy
+  #     - https-companion
+  #   build: ./.docker/grav
+  #   environment:
+  #     - VIRTUAL_HOST=${SERVER_NAME02}
+  #     - LETSENCRYPT_HOST=${SERVER_NAME02}
+  #     - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
+  #   volumes:
+  #     - ./grav-data:/var/www/html
+
+  wiki:
+    container_name:  wiki
     depends_on:
       - nginx-proxy
       - https-companion
-    build: ./.docker/grav
+    image: arm64v8/php:7.2.11-apache
     environment:
       - VIRTUAL_HOST=${SERVER_NAME02}
       - LETSENCRYPT_HOST=${SERVER_NAME02}
       - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
     volumes:
-      - ./grav-data:/var/www/html
+      - ./wiki:/var/www/html
 
 # Databases
   bdd:
