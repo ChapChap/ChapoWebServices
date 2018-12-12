@@ -66,6 +66,8 @@ Répond à
 
 ### Roue de Hudson
 
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+
 + Définir projet
 + Mep projet
 + Rentabiliser projet
@@ -76,6 +78,7 @@ Répond à
 + Maturation
 + Déblocage
 + Explorer réinventer futur
+![roue de hudson](../../assets/roue-de-hudson.gif)
 
 ### Roue de Prochaska
 

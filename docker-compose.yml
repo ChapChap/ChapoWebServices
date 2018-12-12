@@ -28,36 +28,40 @@ services:
       - ./proxy/challenges:/usr/share/nginx/html
 
 # WebServices
-  wordpress:
-    container_name: web-blog
+
+#  wordpress:
+#    container_name: web-blog
+#    depends_on:
+#      - bdd
+#      - nginx-proxy
+#      - https-companion
+#    links:
+#      - bdd
+#    image: arm64v8/wordpress:${WORDPRESS_VERSION}
+#    environment:
+#      - VIRTUAL_HOST=${SERVER_NAME01}
+#      - LETSENCRYPT_HOST=${SERVER_NAME01}
+#      - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
+#      - WORDPRESS_DB_HOST=bdd:3306
+#      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+#      - WORDPRESS_DB_USER=${DB_USER}
+#      - WORDPRESS_DB_PASSWORD=${DB_PASSWORD}
+#    volumes:
+#      - ./wp/wp-content:/var/www/html/wp-content
+#      - ./wp/wp-admin:/var/www/html/wp-admin
+
+  grav:
+    container_name:  web-grav
     depends_on:
-      - bdd
       - nginx-proxy
       - https-companion
-    links:
-      - bdd
-    image: arm64v8/wordpress:${WORDPRESS_VERSION}
+    build: ./.docker/grav
     environment:
       - VIRTUAL_HOST=${SERVER_NAME01}
       - LETSENCRYPT_HOST=${SERVER_NAME01}
       - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
-      - WORDPRESS_DB_HOST=bdd:3306
-      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
-      - WORDPRESS_DB_USER=${DB_USER}
-      - WORDPRESS_DB_PASSWORD=${DB_PASSWORD}
-
-  # grav:
-  #   container_name:  web-grav
-  #   depends_on:
-  #     - nginx-proxy
-  #     - https-companion
-  #   build: ./.docker/grav
-  #   environment:
-  #     - VIRTUAL_HOST=${SERVER_NAME02}
-  #     - LETSENCRYPT_HOST=${SERVER_NAME02}
-  #     - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
-  #   volumes:
-  #     - ./grav-data:/var/www/html
+    volumes:
+      - ./grav-data:/var/www/html
 
   wiki:
     container_name:  wiki
@@ -73,18 +77,23 @@ services:
       - ./wiki:/var/www/html
 
 # Databases
-  bdd:
-    container_name: web-bdd
-    image: arm64v8/mariadb:${MYSQL_VERSION}
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-    volumes:
-      - ./database:/var/lib/mysql
+
+#  bdd:
+#    container_name: web-bdd
+#    image: arm64v8/mariadb:${MYSQL_VERSION}
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+#      - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
+#      - MYSQL_USER=${DB_USER}
+#      - MYSQL_PASSWORD=${DB_PASSWORD}
+#    volumes:
+#      - ./database:/var/lib/mysql
+
+#  cache:
+#    container_name: web-cache
+#    hostname: redis
+#    image: arm64v8/redis
 
 networks:
   default:
-    external:
-      name: nginx-proxy
+    driver: bridge

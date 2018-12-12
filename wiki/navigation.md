@@ -21,7 +21,7 @@
 
 <!-- set a default theme -->
 <!-- [gimmick:theme (inverse: false)](bootstrap) -->
-[gimmick:theme](cyborg)
+[gimmick:theme](flatly)
 
 <!-- show a fork me on github ribbon -->
 <!-- [gimmick:forkmeongithub](http://github.com/Dynalon/mdwiki-seed/) -->
