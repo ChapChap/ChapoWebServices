@@ -76,6 +76,19 @@ services:
     volumes:
       - ./wiki:/var/www/html
 
+  bast:
+    container_name: bast
+    depends_on:
+      - nginx-proxy
+      - https-companion
+    image: arm64v8/php:7.2.11-apache
+    environment:
+      - VIRTUAL_HOST=${SERVER_NAME03}
+      - LETSENCRYPT_HOST=${SERVER_NAME03}
+      - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
+    volumes:
+      - ./bast:/var/www/html
+
 # Databases
 
 #  bdd:
