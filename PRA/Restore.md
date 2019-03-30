@@ -19,6 +19,8 @@
 4. play playbook ip
 5. reboot
 
+> Set IP addresses via router
+
 ## Custom
 
 1. play other playbooks
