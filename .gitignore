@@ -3,3 +3,8 @@ grav-data/
 database/
 proxy/certs
 bast
+web-svc/.env
+web-svc/grav-data/
+web-svc/database/
+web-svc/proxy/certs
+web-svc/bast
