@@ -50,44 +50,46 @@ services:
 #      - ./wp/wp-content:/var/www/html/wp-content
 #      - ./wp/wp-admin:/var/www/html/wp-admin
 
-  grav:
-    container_name:  web-grav
-    depends_on:
-      - nginx-proxy
-      - https-companion
-    build: ./.docker/grav
-    environment:
-      - VIRTUAL_HOST=${SERVER_NAME01}
-      - LETSENCRYPT_HOST=${SERVER_NAME01}
-      - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
-    volumes:
-      - ./grav-data:/var/www/html
+#  grav:
+#    container_name:  web-grav
+#    depends_on:
+#      - nginx-proxy
+#      - https-companion
+#    build: ./.docker/grav
+#    environment:
+#      - VIRTUAL_HOST=${SERVER_NAME01}
+#      - LETSENCRYPT_HOST=${SERVER_NAME01}
+#      - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
+#    volumes:
+#      - ./grav-data:/var/www/html
 
   wiki:
     container_name:  wiki
     depends_on:
       - nginx-proxy
       - https-companion
-    image: arm64v8/php:7.2.11-apache
+#    image: ${WEB_SERVER_IMAGE}
+    build: ./wiki
     environment:
       - VIRTUAL_HOST=${SERVER_NAME02}
       - LETSENCRYPT_HOST=${SERVER_NAME02}
       - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
-    volumes:
-      - ./wiki:/var/www/html
+#    volumes:
+#      - ./wiki:/var/www/html
 
   bast:
     container_name: bast
     depends_on:
       - nginx-proxy
       - https-companion
-    image: arm64v8/php:7.2.11-apache
+#    image: ${WEB_SERVER_IMAGE}
+    build: ./bast
     environment:
       - VIRTUAL_HOST=${SERVER_NAME03}
       - LETSENCRYPT_HOST=${SERVER_NAME03}
       - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
-    volumes:
-      - ./bast:/var/www/html
+#    volumes:
+#      - ./bast/qcmweb:/var/www/html
 
 # Databases
 
