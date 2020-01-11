@@ -3,24 +3,7 @@ Webservices running on Roc Chip &amp; Rpi3
 
 ## Description
 
-This tiny environnement relies on arm64v8 repo on http://hub.docker.com/ where container images are designed to fit the architecture of "libre computer" like RaspberryPi.
-The aim is to create a small scallable infrastructure allowing testing dockerized webservices online
-
-## Todo / Changelog
-
-See ongoing changes on [Trello](https://trello.com/b/HhZisvwy)
-
-- [x] Prepare hardware & network
-- [x] Install docker tools on 3 chips
-- [x] Start standalone containers
-- [x] Configure launch with docker-compose
-- [x] Start container behind reverse proxy
-- [x] Add another service to the pool
-- [x] Encrypt with SSL certificates
-- [ ] Normalize addition of services to existing configuration
-- [ ] Deploy containers through docker swarm
-- [ ] Add metrics
-- [ ] Scale up by adding one more chip to the swarm
+Proxified web servers
 
 ## Configuration 
 
@@ -70,19 +53,6 @@ To force rebuild images
 docker-compose up--force-recreate --build -d
 ```
 
-## About the project
+## SubProjects
 
-It all started when I bought the first version of RaspberryPi computer. It was the best way for me to build a server to answer some of my needs. The first services installed (BareOS) were:
-
-- AirPlay
-- TimeCapsule
-- NFS
-- Owncloud
-- transmission-torrent
-- gitlab
-
-The Pi was used as a Streaming platform (audio, movies, documents), backup platform, seedbox and dev platform. All these services ran well on the tiny chip despite the limited capacity of the chip. But, the maintenance was a bit tough when it came to debug. Thus, sadly, some services stopped working. Then I moved to another location and I shut the Pi off.
-
-Later, I saw a project of a raspi dashcam and I started thinking about doing it myself, which I never did due to a lack of time.
-
-Recently, I heard about docker and containers at school and at work as well. From that moment on I 've been really interested in gainingas much knowledge as possible about that tech. Being a student (and as such a bit short on money), I've set my sights on new generation chips. I am challenging myself to cluster their hardware and to deploy containers freely over a scalable platform made by my own.
+TO DO
