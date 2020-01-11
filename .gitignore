@@ -1,10 +1,11 @@
 .env
 grav-data/
 database/
-proxy/certs
+proxy/*
 bast
 web-svc/.env
 web-svc/grav-data/
 web-svc/database/
 web-svc/proxy/certs
 web-svc/bast
+.DS_Store
