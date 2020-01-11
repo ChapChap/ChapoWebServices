@@ -50,7 +50,7 @@ docker-compose down
 
 To force rebuild images
 ```
-docker-compose up--force-recreate --build -d
+docker-compose up --force-recreate --build -d
 ```
 
 ## SubProjects
