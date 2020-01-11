@@ -55,4 +55,4 @@ docker-compose up --force-recreate --build -d
 
 ## SubProjects
 
-TO DO
+git submodule add git@github.com:ChapChap/Wiki.git wiki
