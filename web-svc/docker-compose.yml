@@ -1,7 +1,7 @@
-version: '3'
+version: "3"
 
 services:
-# Reverse Proxy
+  # Reverse Proxy
   nginx-proxy:
     container_name: web-proxy
     image: alexanderkrause/rpi-nginx-proxy:${PROXY_VERSION}
@@ -21,91 +21,11 @@ services:
     image: alexanderkrause/rpi-letsencrypt-nginx-proxy-companion:${PROXY_VERSION}
     environment:
       - NGINX_PROXY_CONTAINER=web-proxy
-    volumes :
+    volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./proxy/certs:/etc/nginx/certs
       - ./proxy/vhost.d:/etc/nginx/vhost.d
       - ./proxy/challenges:/usr/share/nginx/html
-
-# WebServices
-
-#  wordpress:
-#    container_name: web-blog
-#    depends_on:
-#      - bdd
-#      - nginx-proxy
-#      - https-companion
-#    links:
-#      - bdd
-#    image: arm64v8/wordpress:${WORDPRESS_VERSION}
-#    environment:
-#      - VIRTUAL_HOST=${SERVER_NAME01}
-#      - LETSENCRYPT_HOST=${SERVER_NAME01}
-#      - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
-#      - WORDPRESS_DB_HOST=bdd:3306
-#      - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
-#      - WORDPRESS_DB_USER=${DB_USER}
-#      - WORDPRESS_DB_PASSWORD=${DB_PASSWORD}
-#    volumes:
-#      - ./wp/wp-content:/var/www/html/wp-content
-#      - ./wp/wp-admin:/var/www/html/wp-admin
-
-  grav:
-    container_name:  web-grav
-    depends_on:
-      - nginx-proxy
-      - https-companion
-    build: ./.docker/grav
-    environment:
-      - VIRTUAL_HOST=${SERVER_NAME01}
-      - LETSENCRYPT_HOST=${SERVER_NAME01}
-      - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
-    volumes:
-      - ./grav-data:/var/www/html
-
-  wiki:
-    container_name:  wiki
-    depends_on:
-      - nginx-proxy
-      - https-companion
-    image: arm64v8/php:7.2.11-apache
-    environment:
-      - VIRTUAL_HOST=${SERVER_NAME02}
-      - LETSENCRYPT_HOST=${SERVER_NAME02}
-      - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
-    volumes:
-      - ./wiki:/var/www/html
-
-  bast:
-    container_name: bast
-    depends_on:
-      - nginx-proxy
-      - https-companion
-    image: arm64v8/php:7.2.11-apache
-    environment:
-      - VIRTUAL_HOST=${SERVER_NAME03}
-      - LETSENCRYPT_HOST=${SERVER_NAME03}
-      - LETSENCRYPT_EMAIL=antoine.chapusot@gmail.com
-    volumes:
-      - ./bast:/var/www/html
-
-# Databases
-
-#  bdd:
-#    container_name: web-bdd
-#    image: arm64v8/mariadb:${MYSQL_VERSION}
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-#      - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
-#      - MYSQL_USER=${DB_USER}
-#      - MYSQL_PASSWORD=${DB_PASSWORD}
-#    volumes:
-#      - ./database:/var/lib/mysql
-
-#  cache:
-#    container_name: web-cache
-#    hostname: redis
-#    image: arm64v8/redis
 
 networks:
   default:
